@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class Main extends Application {
 
+    //Название файла с алфавитом
+    //Можно редактировать файл (Соблюдая текущие правила)
     private String  name = "Alphabet.txt";
 
     @Override
@@ -24,12 +26,12 @@ public class Main extends Application {
         Label labelDecimalResult = UIUtils.createLabel(root,100,200,String.valueOf(""));
         Button inputButton = UIUtils.createButton(root, 300, 100, "Input");
 
-        //При нажатии на кнопку считываем из inputTextField
+        // При нажатии на кнопку считываем из inputTextField
         // и преобразований результат записываем в labelDecimalResult
         inputButton.setOnAction(event -> {
             String textFromTextField = inputTextField.getText();
             if (textFromTextField.length() >= 1) {
-                int decimal = convertTralfamadorianToDecimal(textFromTextField);
+                Integer decimal = convertTralfamadorianToDecimal(textFromTextField);
                 labelDecimalResult.setText(String.valueOf(decimal));
             }
         });
@@ -39,13 +41,11 @@ public class Main extends Application {
         exitButton.setPrefSize(43,7);
         exitButton.setOnAction(event -> {Platform.exit();});
 
-        FileUtils fileUtils =  new FileUtils();
-
         primaryStage.show();
     }
 
     //Преобразование tralfamadorian число в десятичное
-    public int convertTralfamadorianToDecimal(String tralfamadorianNumber) {
+    public Integer convertTralfamadorianToDecimal(String tralfamadorianNumber) {
 
         FileUtils fileUtils =  new FileUtils();
 
@@ -58,7 +58,7 @@ public class Main extends Application {
         int lastUsedPlaceNumber = 0;
         int currentlyPlaceNumber = 0;
 
-        if(tralfamadorianNumber.charAt(tralfamadorianNumber.length()-1)!='|'){
+        if(tralfamadorianNumber.charAt(tralfamadorianNumber.length()-1) != '|'){
            currentlyPlaceNumber = 1;
         }
 
@@ -94,6 +94,12 @@ public class Main extends Application {
                     currentlyPlaceNumber = currentlyPlaceNumber + 1;
                 }
             }
+        }
+
+        try {
+            Integer.valueOf(decimalAnswerInStringBuilder.toString());
+        }catch (NumberFormatException ex){
+            return null;
         }
 
         return Integer.valueOf(decimalAnswerInStringBuilder.reverse().toString());
